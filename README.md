@@ -2,7 +2,19 @@
 
 Retries database transaction on deadlock and transaction serialization errors. Supports MySQL, PostgreSQL, and SQLite.
 
-This is a forked project from [transaction_retry](https://github.com/qertoip/transaction_retry)
+This is a forked project from
+
+  * otimalworkshop: https://github.com/optimalworkshop/transaction_retry
+  * qertoip: https://github.com/qertoip/transaction_retry
+
+OpenStax forked the project to correct a bug with Ruby version 3 or above that caused
+an **ArgumentError**: wrong number of arguments (given 1, expected 0)
+
+when calling ActiveRecord::Base.transaction with a hash such as:
+
+`ActiveRecord::Base.transaction(requires_new: true)`
+
+Details of the fix are in commit https://github.com/openstax/transaction_retry/commit/9184c88ab917271026e08d6dd5e890740f7fdd48
 
 ## Example
 
