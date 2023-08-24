@@ -2,7 +2,7 @@
 
 ### 1.2.0 - 2023-08-24
 * Forked and renamed to OpenStaxTransactionRetry
-* Bug with calling  
+* Fix bug with calling overloaded transaction with a hash
 
 
 ### 1.1.0 - 2019-06-17

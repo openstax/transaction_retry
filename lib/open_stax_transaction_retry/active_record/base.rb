@@ -17,20 +17,23 @@ module OpenStaxTransactionRetry
 
       module ClassMethods
         # rubocop:todo Metrics/PerceivedComplexity
-        def transaction_with_retry(*objects, &block) # rubocop:todo Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+        def transaction_with_retry(**objects, &block) # rubocop:todo Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
           retry_count = 0
 
-          opts = if objects.last.is_a? Hash
+          opts = if objects.is_a? Hash
+                   objects
+                 elsif objects.is_a?(Array) && objects.last.is_a?(Hash)
                    objects.last
                  else
                    {}
                  end
 
-          retry_on = opts.delete(:retry_on)
+          retry_on = opts.delete(:retry_on) || OpenStaxTransactionRetry.retry_on
           max_retries = opts.delete(:max_retries) || OpenStaxTransactionRetry.max_retries
+          before_retry = opts.delete(:before_retry) || OpenStaxTransactionRetry.before_retry
 
           begin
-            transaction_without_retry(*objects, &block)
+            transaction_without_retry(**objects, &block)
           rescue ::ActiveRecord::TransactionIsolationConflict, *retry_on => e
             raise if retry_count >= max_retries
             raise if tr_in_nested_transaction?
