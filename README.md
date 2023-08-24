@@ -22,7 +22,7 @@ __It works out of the box with Ruby on Rails__.
 
 If you have a standalone ActiveRecord-based project you'll need to call:
 
-    TransactionRetry.apply_activerecord_patch     # after connecting to the database
+    OpenStaxTransactionRetry.apply_activerecord_patch     # after connecting to the database
 
 __after__ connecting to the database.
 
@@ -49,12 +49,12 @@ __after__ connecting to the database.
 You can optionally configure transaction_retry gem in your config/initializers/transaction_retry.rb (or anywhere else):
 
 ```
-    TransactionRetry.max_retries = 3
-    TransactionRetry.wait_times = [0, 1, 2, 4, 8, 16, 32]   # seconds to sleep after retry n
-    TransactionRetry.retry_on = CustomErrorClass # To add another error class to retry on (ActiveRecord::TransactionIsolationConflict always included)
+    OpenStaxTransactionRetry.max_retries = 3
+    OpenStaxTransactionRetry.wait_times = [0, 1, 2, 4, 8, 16, 32]   # seconds to sleep after retry n
+    OpenStaxTransactionRetry.retry_on = CustomErrorClass # To add another error class to retry on (ActiveRecord::TransactionIsolationConflict always included)
   or
-    TransactionRetry.retry_on = [<custom error classes>]
-    TransactionRetry.before_retry = ->(retry_num, error) { ... }
+    OpenStaxTransactionRetry.retry_on = [<custom error classes>]
+    OpenStaxTransactionRetry.before_retry = ->(retry_num, error) { ... }
 ```
 
 ## Features
