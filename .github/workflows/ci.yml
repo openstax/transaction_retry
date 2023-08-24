@@ -10,9 +10,11 @@ env:
   DB_NAME: oxtr_test
   DB_USERNAME: oxtr
   DB_PASSWORD: oxtr_pass
+  DB_HOST: localhost
+  DB_PORT: 5432
 
 jobs:
-  test:
+  lint-and-test:
     timeout-minutes: 10
     runs-on: ubuntu-22.04
     services:
@@ -21,24 +23,17 @@ jobs:
         ports:
         - 5432:5432
         env:
-          POSTGRES_DB: $DB_NAME
-          POSTGRES_USER: $DB_USERNAME
-          POSTGRES_PASSWORD: $DB_PASSWORD
+          POSTGRES_DB: oxtr_test
+          POSTGRES_USER: oxtr
+          POSTGRES_PASSWORD: oxtr_pass
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/cache@v3
+      - uses: ruby/setup-ruby@v1
         with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
-      - name: Run Postgresql Tests
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+      - name: Run Tests
         run: |
+          bundle exec rubocop
           db=postgresql bundle exec rake test
-    lint:
-      - uses: actions/checkout@v3
-      - name: Run rubocop
-        run: |
-          bundle exec rubocop ${{ github.event.pull_request.base.sha }} ${{ github.sha }}

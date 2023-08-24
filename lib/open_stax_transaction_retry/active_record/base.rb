@@ -27,7 +27,7 @@ module OpenStaxTransactionRetry
                  end
 
           retry_on = opts.delete(:retry_on)
-          max_retries = opts.delete(:max_retries) || TransactionRetry.max_retries
+          max_retries = opts.delete(:max_retries) || OpenStaxTransactionRetry.max_retries
 
           begin
             transaction_without_retry(*objects, &block)

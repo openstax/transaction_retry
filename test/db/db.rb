@@ -17,6 +17,8 @@ module OpenStaxTransactionRetry
       def self.connect_to_postgresql
         ::ActiveRecord::Base.establish_connection(
           adapter: 'postgresql',
+          host: ENV.fetch('DB_HOST', nil),
+          port: ENV.fetch('DB_PORT', nil),
           database: ENV.fetch('DB_NAME', nil),
           user: ENV.fetch('DB_USERNAME', nil),
           password: ENV.fetch('DB_PASSWORD', nil)
