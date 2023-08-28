@@ -1,35 +1,37 @@
+# frozen_string_literal: true
+
 require 'fileutils'
 
-module TransactionRetry
+module OpenStaxTransactionRetry
   module Test
     module Db
-
       def self.connect_to_mysql2
         ::ActiveRecord::Base.establish_connection(
-          :adapter => "mysql2",
-          :database => "transaction_retry_test",
-          :username => ENV['DB_USERNAME'],
-          :password => ENV['DB_PASSWORD']
+          adapter: 'mysql2',
+          database: 'transaction_retry_test',
+          username: ENV.fetch('DB_USERNAME'),
+          password: ENV.fetch('DB_PASSWORD', nil)
         )
       end
 
       def self.connect_to_postgresql
         ::ActiveRecord::Base.establish_connection(
-          :adapter => "postgresql",
-          :database => "transaction_retry_test",
-          :user => ENV['DB_USERNAME'],
-          :password => ENV['DB_PASSWORD']
+          adapter: 'postgresql',
+          host: ENV.fetch('DB_HOST', nil),
+          port: ENV.fetch('DB_PORT', nil),
+          database: ENV.fetch('DB_NAME', nil),
+          user: ENV.fetch('DB_USERNAME', nil),
+          password: ENV.fetch('DB_PASSWORD', nil)
         )
       end
 
       def self.connect_to_sqlite3
         ActiveRecord::Base.establish_connection(
-          :adapter => "sqlite3",
-          :database => ":memory:",
-          :verbosity => "silent"
+          adapter: 'sqlite3',
+          database: ':memory:',
+          verbosity: 'silent'
         )
       end
-
     end
   end
 end

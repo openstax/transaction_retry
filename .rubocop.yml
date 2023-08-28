@@ -1,0 +1,95 @@
+AllCops:
+  TargetRubyVersion: 2.6
+  SuggestExtensions: false
+  NewCops: enable
+  Exclude:
+    - 'db/**/*.rb'
+    - 'app/bindings/**/*.rb'
+    - 'node_modules/**/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
+    - '.git/**/*'
+
+Layout/EmptyLinesAroundClassBody:
+  Enabled: false
+
+Layout/EmptyLinesAroundBlockBody:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 100
+  AllowedPatterns: ['(\A|\s)#']
+  Exclude:
+    - '*.gemspec'
+
+Metrics/AbcSize:
+  Max: 50
+
+Naming/PredicateName:
+  Enabled: false
+
+Metrics/ClassLength:
+  Max: 500
+  CountAsOne: ['heredoc']
+
+Metrics/MethodLength:
+  Max: 50
+  CountAsOne: ['heredoc']
+
+Metrics/BlockLength:
+  CountAsOne: ['heredoc']
+  Max: 30
+  Exclude:
+    - '**/*_open_api.rb'
+    - '**/*.rake'
+    - 'lib/patches/api/**/*.rb'
+
+Metrics/ModuleLength:
+  CountAsOne: ['heredoc']
+
+Style/Alias:
+  EnforcedStyle: prefer_alias_method
+
+Style/Documentation:
+  Enabled: false
+
+Style/OpenStructUse:
+  Enabled: false
+
+Style/StringLiterals:
+  ConsistentQuotesInMultiline: true
+
+Layout/SpaceAroundEqualsInParameterDefault:
+  EnforcedStyle: no_space
+
+Style/AccessorGrouping:
+  EnforcedStyle: separated
+
+Style/SingleLineMethods:
+  Enabled: false # don't abuse it, but sometimes it is right
+
+Style/RegexpLiteral:
+  AllowInnerSlashes: true
+
+Style/SymbolProc:
+  AllowedMethods:
+    - respond_to
+    - define_method
+
+Layout/ClosingParenthesisIndentation:
+  Enabled: false # when true hanging parens look weird
+
+Layout/MultilineMethodCallBraceLayout:
+  Enabled: false
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented_relative_to_receiver
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/SymbolArray:
+  EnforcedStyle: brackets
+
+Style/Lambda:
+  Enabled: false

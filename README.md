@@ -2,7 +2,19 @@
 
 Retries database transaction on deadlock and transaction serialization errors. Supports MySQL, PostgreSQL, and SQLite.
 
-This is a forked project from [transaction_retry](https://github.com/qertoip/transaction_retry)
+This is a forked project from
+
+  * otimalworkshop: https://github.com/optimalworkshop/transaction_retry
+  * qertoip: https://github.com/qertoip/transaction_retry
+
+OpenStax forked the project to correct a bug with Ruby version 3 or above that caused
+an **ArgumentError**: wrong number of arguments (given 1, expected 0)
+
+when calling ActiveRecord::Base.transaction with a hash such as:
+
+`ActiveRecord::Base.transaction(requires_new: true)`
+
+Details of the fix are in commit https://github.com/openstax/transaction_retry/commit/9184c88ab917271026e08d6dd5e890740f7fdd48
 
 ## Example
 
@@ -22,7 +34,7 @@ __It works out of the box with Ruby on Rails__.
 
 If you have a standalone ActiveRecord-based project you'll need to call:
 
-    TransactionRetry.apply_activerecord_patch     # after connecting to the database
+    OpenStaxTransactionRetry.apply_activerecord_patch     # after connecting to the database
 
 __after__ connecting to the database.
 
@@ -49,12 +61,12 @@ __after__ connecting to the database.
 You can optionally configure transaction_retry gem in your config/initializers/transaction_retry.rb (or anywhere else):
 
 ```
-    TransactionRetry.max_retries = 3
-    TransactionRetry.wait_times = [0, 1, 2, 4, 8, 16, 32]   # seconds to sleep after retry n
-    TransactionRetry.retry_on = CustomErrorClass # To add another error class to retry on (ActiveRecord::TransactionIsolationConflict always included)
+    OpenStaxTransactionRetry.max_retries = 3
+    OpenStaxTransactionRetry.wait_times = [0, 1, 2, 4, 8, 16, 32]   # seconds to sleep after retry n
+    OpenStaxTransactionRetry.retry_on = CustomErrorClass # To add another error class to retry on (ActiveRecord::TransactionIsolationConflict always included)
   or
-    TransactionRetry.retry_on = [<custom error classes>]
-    TransactionRetry.before_retry = ->(retry_num, error) { ... }
+    OpenStaxTransactionRetry.retry_on = [<custom error classes>]
+    OpenStaxTransactionRetry.before_retry = ->(retry_num, error) { ... }
 ```
 
 ## Features

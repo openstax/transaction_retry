@@ -1,5 +1,10 @@
 ### Unreleased
 
+### 1.2.0 - 2023-08-24
+* Forked and renamed to OpenStaxTransactionRetry
+* Fix bug with calling overloaded transaction with a hash
+
+
 ### 1.1.0 - 2019-06-17
 
 * Add `TransactionRetry.before_retry` configuration option to run Proc before transaction retry
